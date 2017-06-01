@@ -21,7 +21,7 @@ import android.util.Log;
 
 import net.minidev.json.JSONObject;
 
-import org.java_websocket.client.DefaultSSLWebSocketClientFactory;
+//import org.java_websocket.client.DefaultSSLWebSocketClientFactory;
 import org.java_websocket.handshake.ServerHandshake;
 import java.io.IOException;
 import java.net.URI;
@@ -35,6 +35,7 @@ import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Vector;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
 import fi.vtt.nubomedia.jsonrpcwsandroid.JsonRpcNotification;
 import fi.vtt.nubomedia.jsonrpcwsandroid.JsonRpcResponse;
@@ -279,11 +280,13 @@ public class KurentoRoomAPI extends KurentoAPI {
                 } else {
                     sslContext.init(null, null, null);
                 }
-                webSocketClientFactory = new DefaultSSLWebSocketClientFactory(sslContext);
+                sslSocketFactory = sslContext.getSocketFactory();
+                //webSocketClientFactory = new DefaultSSLWebSocketClientFactory(sslContext);
             }
         } catch (URISyntaxException|NoSuchAlgorithmException|KeyStoreException|KeyManagementException e) {
             e.printStackTrace();
         }
+
         super.connectWebSocket();
     }
 
